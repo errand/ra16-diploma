@@ -1,4 +1,16 @@
+import { NavLink, useLocation } from "react-router-dom";
+import { useState, useRef } from "react";
+
 export default function Header() {
+  const {pathname} = useLocation()
+  const [active, setActive] = useState(false);
+  const searchInput  = useRef(null);
+
+  const handleSearchTogglerClick = () => {
+    searchInput.current.focus();
+    setActive(active => !active);
+  }
+
   return (
     <header className="container">
       <div className="row">
@@ -9,29 +21,29 @@ export default function Header() {
             </a>
             <div className="collapase navbar-collapse" id="navbarMain">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                  <a className="nav-link" href="/">Главная</a>
+                <li className={`nav-item${pathname === '/' ? ' active' : ''}`}>
+                  <NavLink to="/" className="nav-link">Главная</NavLink>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/catalog.html">Каталог</a>
+                <li className={`nav-item${pathname === '/catalog' ? ' active' : ''}`}>
+                  <NavLink className="nav-link" to="/catalog">Каталог</NavLink>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/about.html">О магазине</a>
+                <li className={`nav-item${pathname === '/about' ? ' active' : ''}`}>
+                  <NavLink className="nav-link" to="/about">О магазине</NavLink>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/contacts.html">Контакты</a>
+                <li className={`nav-item${pathname === '/contacts' ? ' active' : ''}`}>
+                  <NavLink className="nav-link" to="/contacts">Контакты</NavLink>
                 </li>
               </ul>
               <div>
                 <div className="header-controls-pics">
-                  <div data-id="search-expander" className="header-controls-pic header-controls-search"></div>
+                  <div onClick={handleSearchTogglerClick} data-id="search-expander" className="header-controls-pic header-controls-search"></div>
                   <div className="header-controls-pic header-controls-cart">
                     <div className="header-controls-cart-full">1</div>
                     <div className="header-controls-cart-menu"></div>
                   </div>
                 </div>
-                <form data-id="search-form" className="header-controls-search-form form-inline invisible">
-                  <input className="form-control" placeholder="Поиск" />
+                <form data-id="search-form" className={`header-controls-search-form form-inline${active ? '' : ' invisible'}`}>
+                  <input className="form-control" placeholder="Поиск" ref={searchInput} />
                 </form>
               </div>
             </div>
