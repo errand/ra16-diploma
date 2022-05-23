@@ -1,13 +1,16 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { useState, useRef } from "react";
+import {useState, useRef, useEffect} from "react";
 
 export default function Header() {
   const {pathname} = useLocation()
   const [active, setActive] = useState(false);
   const searchInput  = useRef(null);
 
+  useEffect(() => {
+    active && searchInput.current.focus();
+  })
+
   const handleSearchTogglerClick = () => {
-    searchInput.current.focus();
     setActive(active => !active);
   }
 
