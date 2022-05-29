@@ -16,13 +16,12 @@ export const categoriesSlice = createSlice({
     categoriesReceived: (state, action) => {
       if (state.loading === 'pending') {
         state.loading = 'idle'
-        state.services = action.payload
+        state.data = action.payload
       }
     },
     categoriesError: (state, action) => {
       if (state.loading === 'pending') {
         state.loading = 'idle'
-        state.goodToGo = false
         state.error = action.payload
       }
     }

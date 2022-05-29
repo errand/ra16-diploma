@@ -1,10 +1,10 @@
 import { productsError, productsLoading, productsReceived } from "../redux/productsSlice";
 
-export const fetchServices = () => (dispatch) => {
+export const fetchProducts = () => (dispatch) => {
 
   dispatch(productsLoading());
 
-  fetch(PATH)
+  fetch(process.env.REACT_APP_NOT_SECRET_CODE)
     .then(request => {
       if (request.status === 200) {
         return request.json();

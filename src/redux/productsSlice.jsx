@@ -16,7 +16,7 @@ export const productsSlice = createSlice({
     productsReceived: (state, action) => {
       if (state.loading === 'pending') {
         state.loading = 'idle'
-        state.services = action.payload
+        state.products = action.payload
       }
     },
     productsError: (state, action) => {
@@ -29,6 +29,6 @@ export const productsSlice = createSlice({
   }
 });
 
-export const { servicesLoading, servicesReceived, servicesError } = productsSlice.actions;
+export const { productsLoading, productsReceived, productsError } = productsSlice.actions;
 
 export default productsSlice.reducer;
