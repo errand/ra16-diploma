@@ -4,7 +4,7 @@ import categoriesReducer from "./categoriesSlice"
 
 export default configureStore({
   reducer:{
-    tasks: productsReducer,
+    products: productsReducer,
     categories: categoriesReducer,
   }
 });

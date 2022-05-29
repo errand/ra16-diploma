@@ -16,13 +16,12 @@ export const productsSlice = createSlice({
     productsReceived: (state, action) => {
       if (state.loading === 'pending') {
         state.loading = 'idle'
-        state.products = action.payload
+        state.data = action.payload
       }
     },
     productsError: (state, action) => {
       if (state.loading === 'pending') {
         state.loading = 'idle'
-        state.goodToGo = false
         state.error = action.payload
       }
     }

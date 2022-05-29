@@ -14,16 +14,21 @@ export default function CategoriesFilter() {
     dispatch(fetchCategories())
   },[dispatch])
 
+  const handleCategoryClick = (id) => console.log(id)
+
   return (
-    loading === 'pending' ? <Preloader /> :
-    <ul className="catalog-categories nav justify-content-center">
-      <li className="nav-item">
-        <a className="nav-link active" href="#">Все</a>
-      </li>
-      { categories && categories.map(cat =>
-        <li className="nav-item" key={cat.id}>
-          <a className="nav-link" href="#">{cat.title}</a>
-        </li>)}
-    </ul>
+    <>
+      {error && <div className="alert alert-danger">Призошла ошибка {error}</div>}
+      {loading === 'pending' ? <Preloader/> :
+        <ul className="catalog-categories nav justify-content-center">
+          <li className="nav-item">
+            <a className="nav-link active" href="#" onClick={() => handleCategoryClick(0)}>Все</a>
+          </li>
+          {categories && categories.map(cat =>
+            <li className="nav-item" key={cat.id}>
+              <a className="nav-link" href="#" onClick={() => handleCategoryClick(cat.id)}>{cat.title}</a>
+            </li>)}
+        </ul>}
+    </>
   )
 }
