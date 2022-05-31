@@ -18,7 +18,6 @@ export default function CategoriesFilter() {
   },[dispatch])
 
   const handleCategoryClick = (id) => {
-    console.log(id)
     setActive(id)
     dispatch(fetchProducts(`/api/items?categoryId=${id}`))
   };

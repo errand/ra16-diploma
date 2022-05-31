@@ -1,10 +1,13 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {useState, useRef, useEffect} from "react";
 
 export default function Header() {
   const {pathname} = useLocation()
   const [active, setActive] = useState(false);
+  const [query, setQuery] = useState('');
   const searchInput  = useRef(null);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     active && searchInput.current.focus();
@@ -12,6 +15,8 @@ export default function Header() {
 
   const handleSearchTogglerClick = () => {
     setActive(active => !active);
+    active && navigate('/catalog', { state: { q: query } })
+    setQuery('')
   }
 
   return (
@@ -46,7 +51,7 @@ export default function Header() {
                   </div>
                 </div>
                 <form data-id="search-form" className={`header-controls-search-form form-inline${active ? '' : ' invisible'}`}>
-                  <input className="form-control" placeholder="Поиск" ref={searchInput} />
+                  <input className="form-control" placeholder="Поиск" value={query} ref={searchInput} onChange={(e) => setQuery(e.target.value)} />
                 </form>
               </div>
             </div>

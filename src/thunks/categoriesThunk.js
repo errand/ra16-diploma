@@ -14,7 +14,6 @@ export const fetchCategories = () => (dispatch) => {
       }
     })
     .then(json => {
-      console.log(json)
       dispatch(categoriesReceived(json))
     })
     .catch((err) => dispatch(categoriesError(`Произошла ошибка: ${err}`)));

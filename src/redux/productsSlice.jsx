@@ -6,6 +6,7 @@ export const productsSlice = createSlice({
     data: [],
     error: '',
     loading: 'idle',
+    searchQuery: ''
   },
   reducers: {
     productsLoading: (state, action) => {

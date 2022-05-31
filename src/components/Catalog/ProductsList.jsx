@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import Preloader from "../Preloader";
 import { fetchProducts } from '../../thunks/productsThunk'
 import { useEffect } from "react";
@@ -10,12 +11,16 @@ export default function ProductsList() {
   const loading = useSelector(state => state.products.loading)
   const error = useSelector(state => state.products.error)
 
+  const {state} = useLocation();
+  const { q } = state;
+
   useEffect(() => {
-    dispatch(fetchProducts('/api/items'))
+    dispatch(fetchProducts('/api/items'));
+    console.log(q)
   },[dispatch])
 
   return (
-    products ? <>
+    products && products.length > 0 ? <>
         <div className="row">
         {error && <div className="alert alert-danger">Призошла ошибка {error}</div>}
         {loading === 'pending' ? <Preloader/> :
@@ -26,6 +31,6 @@ export default function ProductsList() {
       <div className="text-center">
         <button className="btn btn-outline-primary">Загрузить ещё</button>
       </div>
-      </> : null
+      </> : <div>Nothing found</div>
   )
 }
