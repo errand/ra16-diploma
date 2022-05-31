@@ -15,12 +15,17 @@ export default function ProductsList() {
   },[dispatch])
 
   return (
-    products ? <div className="row">
-      {error && <div className="alert alert-danger">Призошла ошибка {error}</div>}
-      {loading === 'pending' ? <Preloader/> :
+    products ? <>
         <div className="row">
-          {products.map(product => <ProductItem  key={product.id} product={product} />)}
-        </div>}
-    </div> : null
+        {error && <div className="alert alert-danger">Призошла ошибка {error}</div>}
+        {loading === 'pending' ? <Preloader/> :
+          <div className="row">
+            {products.map(product => <ProductItem  key={product.id} product={product} />)}
+          </div>}
+      </div>
+      <div className="text-center">
+        <button className="btn btn-outline-primary">Загрузить ещё</button>
+      </div>
+      </> : null
   )
 }

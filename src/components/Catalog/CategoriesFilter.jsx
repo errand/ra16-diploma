@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../Preloader";
-import { fetchCategories } from '../../thunks/categoriesThunk'
-import { useEffect } from "react";
+import { fetchCategories } from '../../thunks/categoriesThunk';
+import { fetchProducts } from '../../thunks/productsThunk';
+import {useEffect, useState} from "react";
 
 export default function CategoriesFilter() {
 
@@ -10,11 +11,17 @@ export default function CategoriesFilter() {
   const loading = useSelector(state => state.categories.loading)
   const error = useSelector(state => state.categories.error)
 
+  const [active, setActive] = useState(0)
+
   useEffect(() => {
     dispatch(fetchCategories())
   },[dispatch])
 
-  const handleCategoryClick = (id) => console.log(id)
+  const handleCategoryClick = (id) => {
+    console.log(id)
+    setActive(id)
+    dispatch(fetchProducts(`/api/items?categoryId=${id}`))
+  };
 
   return (
     <>
@@ -22,11 +29,11 @@ export default function CategoriesFilter() {
       {loading === 'pending' ? <Preloader/> :
         <ul className="catalog-categories nav justify-content-center">
           <li className="nav-item">
-            <a className="nav-link active" href="#" onClick={() => handleCategoryClick(0)}>Все</a>
+            <a className={active === 0 ? "nav-link active" : "nav-link" } href="#" onClick={() => handleCategoryClick(0)}>Все</a>
           </li>
           {categories && categories.map(cat =>
             <li className="nav-item" key={cat.id}>
-              <a className="nav-link" href="#" onClick={() => handleCategoryClick(cat.id)}>{cat.title}</a>
+              <a className={active === cat.id ? "nav-link active" : "nav-link" } href="#" onClick={() => handleCategoryClick(cat.id)}>{cat.title}</a>
             </li>)}
         </ul>}
     </>
