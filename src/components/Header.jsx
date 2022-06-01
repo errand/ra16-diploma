@@ -1,5 +1,7 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {useState, useRef, useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {setStateQuery} from "../thunks/productsThunk";
 
 export default function Header() {
   const {pathname} = useLocation()
@@ -9,13 +11,16 @@ export default function Header() {
 
   const navigate = useNavigate()
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     active && searchInput.current.focus();
   })
 
   const handleSearchTogglerClick = () => {
     setActive(active => !active);
-    active && navigate('/catalog', { state: { q: query } })
+    active && navigate('/catalog')
+    dispatch(setStateQuery(query));
     setQuery('')
   }
 

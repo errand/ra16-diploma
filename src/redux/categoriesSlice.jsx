@@ -6,6 +6,7 @@ export const categoriesSlice = createSlice({
     data: [],
     error: '',
     loading: 'idle',
+    active: ''
   },
   reducers: {
     categoriesLoading: (state, action) => {
@@ -24,10 +25,13 @@ export const categoriesSlice = createSlice({
         state.loading = 'idle'
         state.error = action.payload
       }
+    },
+    activeCategory: (state, action) => {
+      state.active = action.payload
     }
   }
 });
 
-export const { categoriesLoading, categoriesReceived, categoriesError } = categoriesSlice.actions;
+export const { categoriesLoading, categoriesReceived, categoriesError, activeCategory } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import Preloader from "../Preloader";
 import { fetchProducts } from '../../thunks/productsThunk'
 import { useEffect } from "react";
@@ -10,13 +9,11 @@ export default function ProductsList() {
   const products = useSelector(state => state.products.data)
   const loading = useSelector(state => state.products.loading)
   const error = useSelector(state => state.products.error)
-
-  const {state} = useLocation();
-  const { q } = state;
+  const query = useSelector(state => state.products.searchQuery)
 
   useEffect(() => {
-    dispatch(fetchProducts('/api/items'));
-    console.log(q)
+    dispatch(fetchProducts(`/api/items${query ? '?q='+query : ''}`));
+    console.log(query)
   },[dispatch])
 
   return (

@@ -1,4 +1,4 @@
-import { categoriesError, categoriesLoading, categoriesReceived } from "../redux/categoriesSlice";
+import { categoriesError, categoriesLoading, categoriesReceived, activeCategory } from "../redux/categoriesSlice";
 
 export const fetchCategories = () => (dispatch) => {
 
@@ -17,4 +17,8 @@ export const fetchCategories = () => (dispatch) => {
       dispatch(categoriesReceived(json))
     })
     .catch((err) => dispatch(categoriesError(`Произошла ошибка: ${err}`)));
+}
+
+export const setActiveCategory = (str) => (dispatch) => {
+  dispatch(activeCategory(str))
 }

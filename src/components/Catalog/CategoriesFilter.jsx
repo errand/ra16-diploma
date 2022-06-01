@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../Preloader";
-import { fetchCategories } from '../../thunks/categoriesThunk';
+import { fetchCategories, setActiveCategory } from '../../thunks/categoriesThunk';
 import { fetchProducts } from '../../thunks/productsThunk';
 import {useEffect, useState} from "react";
 
@@ -14,12 +14,13 @@ export default function CategoriesFilter() {
   const [active, setActive] = useState(0)
 
   useEffect(() => {
-    dispatch(fetchCategories())
+    dispatch(fetchCategories());
   },[dispatch])
 
   const handleCategoryClick = (id) => {
-    setActive(id)
-    dispatch(fetchProducts(`/api/items?categoryId=${id}`))
+    setActive(id);
+    dispatch(setActiveCategory(id));
+    dispatch(fetchProducts(`/api/items?categoryId=${id}`));
   };
 
   return (

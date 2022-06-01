@@ -1,4 +1,4 @@
-import { productsError, productsLoading, productsReceived } from "../redux/productsSlice";
+import {productsError, productsLoading, productsReceived, setSearchQuery, setOffset} from "../redux/productsSlice";
 
 export const fetchProducts = (path) => (dispatch) => {
   dispatch(productsLoading());
@@ -16,4 +16,12 @@ export const fetchProducts = (path) => (dispatch) => {
       dispatch(productsReceived(json))
     })
     .catch((err) => dispatch(productsError(`Произошла ошибка: ${err}`)));
+}
+
+export const setStateQuery = (str) => (dispatch) => {
+  dispatch(setSearchQuery(str))
+}
+
+export const setStateOffset = (num) => (dispatch) => {
+  dispatch(setOffset(num))
 }
