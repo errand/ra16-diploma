@@ -10,11 +10,16 @@ export default function ProductsList() {
   const loading = useSelector(state => state.products.loading)
   const error = useSelector(state => state.products.error)
   const query = useSelector(state => state.products.searchQuery)
+  const activeCategory = useSelector(state => state.categories.active)
 
   useEffect(() => {
     dispatch(fetchProducts(`/api/items${query ? '?q='+query : ''}`));
-    console.log(query)
   },[dispatch])
+
+  const handleMoreClick = () => {
+    console.log(query)
+    console.log(activeCategory)
+  };
 
   return (
     products && products.length > 0 ? <>
@@ -26,7 +31,7 @@ export default function ProductsList() {
           </div>}
       </div>
       <div className="text-center">
-        <button className="btn btn-outline-primary">Загрузить ещё</button>
+        <button className="btn btn-outline-primary" onClick={handleMoreClick}>Загрузить ещё</button>
       </div>
       </> : <div>Nothing found</div>
   )
