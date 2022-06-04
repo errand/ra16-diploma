@@ -1,7 +1,9 @@
 import {productsError, productsLoading, productsReceived, setSearchQuery, setOffset} from "../redux/productsSlice";
 
-export const fetchProducts = (path) => (dispatch) => {
+export const fetchProducts = (category, query, offset) => (dispatch) => {
   dispatch(productsLoading());
+
+  const path = `/api/items?${offset ? 'offset='+offset : ''}${query ? '&q='+ query : ''}${category ? '&categoryId='+category : ''}`
 
   fetch(process.env.REACT_APP_URL + path)
     .then(request => {

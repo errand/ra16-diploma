@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../Preloader";
 import { fetchProducts } from '../../thunks/productsThunk'
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import ProductItem from "./ProductItem";
 
 export default function ProductsList() {
@@ -12,13 +12,19 @@ export default function ProductsList() {
   const query = useSelector(state => state.products.searchQuery)
   const activeCategory = useSelector(state => state.categories.active)
 
+  const [offset, setOffset] = useState(6);
+
   useEffect(() => {
     dispatch(fetchProducts(`/api/items${query ? '?q='+query : ''}`));
-  },[dispatch])
+    console.log('rendered')
+  },[dispatch]);
 
   const handleMoreClick = () => {
+    setOffset(prev => prev + 6);
+    dispatch(fetchProducts(`/api/items?offset=${offset}${query ? '&q='+query : ''}${activeCategory ? '&categoryId='+activeCategory : ''}`));
     console.log(query)
     console.log(activeCategory)
+    console.log(offset)
   };
 
   return (
