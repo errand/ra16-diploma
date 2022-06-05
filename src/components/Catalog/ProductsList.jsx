@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../Preloader";
-import { fetchProducts } from '../../thunks/productsThunk'
+import { fetchProducts, setStateOffset, appendProducts } from '../../thunks/productsThunk'
 import {useEffect, useState} from "react";
 import ProductItem from "./ProductItem";
 
@@ -10,21 +10,20 @@ export default function ProductsList() {
   const loading = useSelector(state => state.products.loading)
   const error = useSelector(state => state.products.error)
   const query = useSelector(state => state.products.searchQuery)
+  const next = useSelector(state => state.products.next)
   const activeCategory = useSelector(state => state.categories.active)
 
   const [offset, setOffset] = useState(6);
 
   useEffect(() => {
-    dispatch(fetchProducts(`/api/items${query ? '?q='+query : ''}`));
-    console.log('rendered')
+    dispatch(fetchProducts('', query));
+    dispatch(setStateOffset('', '', 6));
   },[dispatch]);
 
   const handleMoreClick = () => {
     setOffset(prev => prev + 6);
-    dispatch(fetchProducts(`/api/items?offset=${offset}${query ? '&q='+query : ''}${activeCategory ? '&categoryId='+activeCategory : ''}`));
-    console.log(query)
-    console.log(activeCategory)
-    console.log(offset)
+    dispatch(appendProducts(activeCategory, query, offset));
+    dispatch(setStateOffset(activeCategory, query, offset + 6));
   };
 
   return (
@@ -36,9 +35,9 @@ export default function ProductsList() {
             {products.map(product => <ProductItem  key={product.id} product={product} />)}
           </div>}
       </div>
-      <div className="text-center">
+      {next.length > 0 && <div className="text-center">
         <button className="btn btn-outline-primary" onClick={handleMoreClick}>Загрузить ещё</button>
-      </div>
+      </div>}
       </> : <div>Nothing found</div>
   )
 }

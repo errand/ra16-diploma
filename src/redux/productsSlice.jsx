@@ -7,7 +7,7 @@ export const productsSlice = createSlice({
     error: '',
     loading: 'idle',
     searchQuery: '',
-    offset: 0
+    next: []
   },
   reducers: {
     productsLoading: (state, action) => {
@@ -21,21 +21,27 @@ export const productsSlice = createSlice({
         state.data = action.payload
       }
     },
+    productsAppend: (state, action) => {
+      if (state.loading === 'pending') {
+        state.loading = 'idle'
+        state.data = [...state.data, ...action.payload]
+      }
+    },
     setSearchQuery: (state, action) => {
         state.searchQuery = action.payload
     },
     setOffset: (state, action) => {
-        state.offset = action.payload
+        state.next = action.payload
     },
     productsError: (state, action) => {
       if (state.loading === 'pending') {
         state.loading = 'idle'
         state.error = action.payload
       }
-    }
+    },
   }
 });
 
-export const { productsLoading, productsReceived, productsError, setSearchQuery, setOffset } = productsSlice.actions;
+export const { productsLoading, productsReceived, productsError, setSearchQuery, setOffset, productsAppend } = productsSlice.actions;
 
 export default productsSlice.reducer;

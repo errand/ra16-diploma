@@ -11,7 +11,7 @@ export default function TopSales() {
   const error = useSelector(state => state.products.error)
 
   useEffect(() => {
-    dispatch(fetchProducts('/api/top-sales'))
+    dispatch(fetchProducts())
   },[dispatch])
 
   return (

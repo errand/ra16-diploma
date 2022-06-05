@@ -10,6 +10,7 @@ export default function CategoriesFilter() {
   const categories = useSelector(state => state.categories.data)
   const loading = useSelector(state => state.categories.loading)
   const error = useSelector(state => state.categories.error)
+  const query = useSelector(state => state.products.searchQuery)
 
   const [active, setActive] = useState(0)
 
@@ -18,9 +19,10 @@ export default function CategoriesFilter() {
   },[dispatch])
 
   const handleCategoryClick = (id) => {
+    console.log(query)
     setActive(id);
     dispatch(setActiveCategory(id));
-    dispatch(fetchProducts(`/api/items?categoryId=${id}`));
+    dispatch(fetchProducts(id, query));
   };
 
   return (

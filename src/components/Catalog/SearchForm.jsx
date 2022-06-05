@@ -1,4 +1,4 @@
-import { fetchProducts } from '../../thunks/productsThunk';
+import { fetchProducts, setStateQuery } from '../../thunks/productsThunk';
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 
@@ -6,19 +6,21 @@ export default function SearchForm() {
 
   const dispatch = useDispatch();
   const query = useSelector(state => state.products.searchQuery)
+  const activeCategory = useSelector(state => state.categories.active)
 
   const [word, setWord] = useState('')
 
-  useEffect(() => {
+  /*useEffect(() => {
     if(query) {
       setWord(query)
     }
-  }, [query])
+  }, [query])*/
 
   const handleSearch = (e) => {
+    setWord(e)
     if(e.trim().length > 3) {
-      setWord(e)
-      dispatch(fetchProducts(`/api/items?q=${e}`))
+      dispatch(setStateQuery(word))
+      dispatch(fetchProducts(activeCategory, e))
     }
   }
 
