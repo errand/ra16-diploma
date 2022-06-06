@@ -1,4 +1,5 @@
 import TopSales from "../components/TopSales";
+import CatalogComponent from "../components/Catalog/CatalogComponent";
 
 export default function Home() {
   return (
@@ -6,12 +7,7 @@ export default function Home() {
       <TopSales />
       <section className="catalog">
         <h2 className="text-center">Каталог</h2>
-        <div className="preloader">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+        <CatalogComponent />
       </section>
     </>
   )

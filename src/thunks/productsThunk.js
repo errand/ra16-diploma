@@ -1,4 +1,4 @@
-import {productsError, productsLoading, productsReceived, setSearchQuery, setOffset, productsAppend} from "../redux/productsSlice";
+import {productsError, productsLoading, productsReceived, setSearchQuery, setOffset, productsAppend, topSalesReceived} from "../redux/productsSlice";
 
 export const appendProducts = (category, query, offset) => (dispatch) => {
   dispatch(productsLoading());
@@ -20,10 +20,10 @@ export const appendProducts = (category, query, offset) => (dispatch) => {
     .catch((err) => dispatch(productsError(`Произошла ошибка: ${err}`)));
 }
 
-export const fetchProducts = (category, query, offset) => (dispatch) => {
+export const fetchProducts = (category, query, offset, id) => (dispatch) => {
   dispatch(productsLoading());
 
-  const path = `/api/items?${offset ? 'offset='+offset : ''}${query ? '&q='+ query : ''}${category ? '&categoryId='+category : ''}`
+  const path = `/api/items${id ? '/' + id : ''}?${offset ? 'offset='+offset : ''}${query ? '&q='+ query : ''}${category ? '&categoryId='+category : ''}`
 
   fetch(process.env.REACT_APP_URL + path)
     .then(request => {
@@ -36,6 +36,26 @@ export const fetchProducts = (category, query, offset) => (dispatch) => {
     })
     .then(json => {
       dispatch(productsReceived(json))
+    })
+    .catch((err) => dispatch(productsError(`Произошла ошибка: ${err}`)));
+}
+
+export const fetchTopSales = () => (dispatch) => {
+  dispatch(productsLoading());
+
+  const path = `/api/top-sales`
+
+  fetch(process.env.REACT_APP_URL + path)
+    .then(request => {
+      if (request.status === 200) {
+        return request.json();
+      } else {
+        dispatch(productsError('Произошла ошибка' + request.statusMessage));
+        return;
+      }
+    })
+    .then(json => {
+      dispatch(topSalesReceived(json))
     })
     .catch((err) => dispatch(productsError(`Произошла ошибка: ${err}`)));
 }

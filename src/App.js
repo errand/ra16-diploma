@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Catalog from "./pages/Catalog";
 import Contacts from "./pages/Contacts";
+import Product from "./pages/Product";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import Banner from "./components/Banner";
@@ -23,6 +24,7 @@ function App() {
               <Route path="about" element={<About />} />
               <Route path="catalog" element={<Catalog />} />
               <Route path="contacts" element={<Contacts />} />
+              <Route path="products/:id" element={<Product />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
