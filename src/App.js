@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Catalog from "./pages/Catalog";
 import Contacts from "./pages/Contacts";
-import Footer from "./components/Foter";
+import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import Banner from "./components/Banner";
 

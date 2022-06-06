@@ -19,7 +19,7 @@ export default function Header() {
 
   const handleSearchTogglerClick = () => {
     setActive(active => !active);
-    active && navigate('/catalog', { state: { topQuery : query} })
+    active && navigate('/catalog')
     dispatch(setStateQuery(query));
     setQuery('')
   }
