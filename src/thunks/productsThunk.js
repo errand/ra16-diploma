@@ -35,6 +35,7 @@ export const fetchProducts = (category, query, offset, id) => (dispatch) => {
       }
     })
     .then(json => {
+      console.log(json)
       dispatch(productsReceived(json))
     })
     .catch((err) => dispatch(productsError(`Произошла ошибка: ${err}`)));

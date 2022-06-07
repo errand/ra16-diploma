@@ -17,7 +17,7 @@ export default function ProductsList() {
 
   useEffect(() => {
     dispatch(fetchProducts('', query));
-    dispatch(setStateOffset('', '', 6));
+    dispatch(setStateOffset('', query, 6));
   },[dispatch]);
 
   const handleMoreClick = () => {
