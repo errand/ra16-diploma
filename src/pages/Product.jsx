@@ -16,7 +16,7 @@ export default function Product() {
 
   useEffect(() => {
     dispatch(fetchProducts('', '', '', id));
-  },[]);
+  },[dispatch, id]);
 
   const handleDecrease = () => {
     if(quantity > 1) {
