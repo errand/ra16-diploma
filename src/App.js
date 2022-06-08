@@ -20,7 +20,7 @@ function App() {
           <div className="col">
             <Banner />
             <Routes>
-              <Route path="/ra16-diploma" element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="about" element={<About />} />
               <Route path="catalog" element={<Catalog />} />
               <Route path="contacts" element={<Contacts />} />

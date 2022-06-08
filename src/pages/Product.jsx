@@ -13,6 +13,7 @@ export default function Product() {
   const error = useSelector(state => state.products.error)
 
   const [quantity, setQuantity] = useState(1)
+  const [activeSize, setActiveSize] = useState('')
 
   useEffect(() => {
     dispatch(fetchProducts('', '', '', id));
@@ -26,6 +27,10 @@ export default function Product() {
 
   const handleIncrease = () => {
     setQuantity(prev => prev += 1)
+  }
+
+  const available = () => {
+    return product.sizes && product.sizes.some(item => item.avalible)
   }
 
   return(
@@ -69,12 +74,16 @@ export default function Product() {
               </tr>}
               </tbody>
             </table>
+            {available() &&
+              <>
             <div className="text-center">
               <p>Размеры в наличии:
-                {product.sizes && product.sizes
+                {product.sizes
                   .filter(item => item.avalible)
-                  .map(item => <span key={item.size} className="catalog-item-size selected">{item.size}</span> )
-                }</p>
+                  .map(item => <span key={item.size}
+                                     className={`catalog-item-size${activeSize === item.size ? ' selected' : ''}`}
+                                     onClick={()=>setActiveSize(item.size)}>{item.size}</span> )}
+                </p>
               <p>Количество: <span className="btn-group btn-group-sm pl-2">
                                         <button className="btn btn-secondary" onClick={handleDecrease}>-</button>
                                         <span className="btn btn-outline-primary">{quantity}</span>
@@ -82,7 +91,7 @@ export default function Product() {
                                     </span>
               </p>
             </div>
-            <button className="btn btn-danger btn-block btn-lg">В корзину</button>
+            <button className="btn btn-danger btn-block btn-lg" disabled={activeSize === '' ? true : false}>В корзину</button></>}
           </div>
         </div>
       </section> }
