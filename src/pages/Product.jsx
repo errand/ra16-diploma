@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {fetchProducts} from "../thunks/productsThunk";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,6 +11,8 @@ export default function Product() {
   const product = useSelector(state => state.products.data)
   const loading = useSelector(state => state.products.loading)
   const error = useSelector(state => state.products.error)
+
+  const navigate = useNavigate();
 
   const [quantity, setQuantity] = useState(1)
   const [activeSize, setActiveSize] = useState('')
@@ -32,6 +34,11 @@ export default function Product() {
   const available = () => {
     return product.sizes && product.sizes.some(item => item.avalible)
   }
+
+  const handleAddToBasket = () => {
+    navigate("/cart", {state: {id, quantity, activeSize}})
+  }
+
 
   return(
     <>
@@ -91,7 +98,7 @@ export default function Product() {
                                     </span>
               </p>
             </div>
-            <button className="btn btn-danger btn-block btn-lg" disabled={activeSize === '' ? true : false}>В корзину</button></>}
+            <button className="btn btn-danger btn-block btn-lg" disabled={activeSize === '' ? true : false} onClick={handleAddToBasket}>В корзину</button></>}
           </div>
         </div>
       </section> }
