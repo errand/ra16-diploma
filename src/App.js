@@ -8,6 +8,7 @@ import Product from "./pages/Product";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import Banner from "./components/Banner";
+import Cart from "./pages/Cart";
 
 import './App.css';
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="about" element={<About />} />
               <Route path="catalog" element={<Catalog />} />
               <Route path="contacts" element={<Contacts />} />
+              <Route path="cart" element={<Cart />} />
               <Route path="products/:id" element={<Product />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
