@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {fetchProducts} from "../thunks/productsThunk";
 import {useDispatch, useSelector} from "react-redux";
 import Preloader from "../components/Preloader";
+import getStorageItems from "../tools/localStorage"
 
 export default function Product() {
   const { id } = useParams();
@@ -14,8 +15,10 @@ export default function Product() {
 
   const navigate = useNavigate();
 
-  const [quantity, setQuantity] = useState(1)
-  const [activeSize, setActiveSize] = useState('')
+  const [quantity, setQuantity] = useState(1);
+  const [activeSize, setActiveSize] = useState('');
+
+  const storage = getStorageItems();
 
   useEffect(() => {
     dispatch(fetchProducts('', '', '', id));
@@ -35,8 +38,20 @@ export default function Product() {
     return product.sizes && product.sizes.some(item => item.avalible)
   }
 
-  const handleAddToBasket = () => {
-    navigate("/cart", {state: {id, quantity, activeSize}})
+  const handleAddToBasket = (title, price) => {
+    if(storage.length > 0) {
+      const idx = storage.findIndex(item => item.id === id);
+      if(idx > -1) {
+        const item = storage[idx];
+        if(item.activeSize === activeSize) {
+          storage[idx].quantity += quantity;
+        }
+      }
+    } else {
+      storage.push({id, title, quantity, activeSize, price});
+    }
+    localStorage.setItem('items', JSON.stringify(storage));
+    navigate("/cart")
   }
 
 
@@ -98,7 +113,7 @@ export default function Product() {
                                     </span>
               </p>
             </div>
-            <button className="btn btn-danger btn-block btn-lg" disabled={activeSize === '' ? true : false} onClick={handleAddToBasket}>В корзину</button></>}
+            <button className="btn btn-danger btn-block btn-lg" disabled={activeSize === '' ? true : false} onClick={()=>handleAddToBasket(product.title, product.price)}>В корзину</button></>}
           </div>
         </div>
       </section> }
