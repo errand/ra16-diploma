@@ -1,15 +1,21 @@
 import {useEffect, useState} from "react";
+import { useDispatch } from "react-redux";
 import {Link} from "react-router-dom";
+import {countItems} from "../thunks/cartThunk";
 import getStorageItems from "../tools/localStorage"
 
 export default function Cart() {
 
+  const dispatch = useDispatch();
   const miniLocalStorage = getStorageItems();
   const [total, setTotal] = useState(0);
   const [storage, setStorage] = useState(miniLocalStorage)
+  const [cartTotal, setCartTotal] = useState(null)
 
   useEffect(()=>{
     setTotal(new Intl.NumberFormat('ru-RU').format(storage.reduce((prev, next) => prev + +next.price * +next.quantity, 0)));
+    setCartTotal(storage.reduce((prev, next) => prev + +next.quantity, 0));
+    dispatch(countItems(cartTotal));
   }, [storage]);
 
   const hanldeDelete = (nanoId) => {

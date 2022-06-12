@@ -1,6 +1,6 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {useState, useRef, useEffect} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setStateQuery} from "../thunks/productsThunk";
 
 export default function Header() {
@@ -12,9 +12,11 @@ export default function Header() {
   const navigate = useNavigate()
 
   const dispatch = useDispatch();
+  const totalItems = useSelector(state => state.cart.totalItems)
 
   useEffect(() => {
     active && searchInput.current.focus();
+    console.log(totalItems)
   })
 
   const handleSearchTogglerClick = () => {
@@ -51,7 +53,7 @@ export default function Header() {
                 <div className="header-controls-pics">
                   <div onClick={handleSearchTogglerClick} data-id="search-expander" className="header-controls-pic header-controls-search"></div>
                   <div className="header-controls-pic header-controls-cart">
-                    <div className="header-controls-cart-full">1</div>
+                    <div className="header-controls-cart-full">{totalItems}</div>
                     <div className="header-controls-cart-menu"></div>
                   </div>
                 </div>
