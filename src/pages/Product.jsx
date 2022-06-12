@@ -4,6 +4,7 @@ import {fetchProducts} from "../thunks/productsThunk";
 import {useDispatch, useSelector} from "react-redux";
 import Preloader from "../components/Preloader";
 import getStorageItems from "../tools/localStorage"
+import {nanoid} from "@reduxjs/toolkit";
 
 export default function Product() {
   const { id } = useParams();
@@ -39,16 +40,16 @@ export default function Product() {
   }
 
   const handleAddToBasket = (title, price) => {
-    if(storage.length > 0) {
-      const idx = storage.findIndex(item => item.id === id);
-      if(idx > -1) {
-        const item = storage[idx];
-        if(item.activeSize === activeSize) {
-          storage[idx].quantity += quantity;
-        }
+    const idx = storage.findIndex(item => item.id === id);
+    if(idx > -1) {
+      const item = storage[idx];
+      if(item.activeSize === activeSize) {
+        storage[idx].quantity += quantity;
+      } else {
+        storage.push({nano: nanoid(), id, title, quantity, activeSize, price});
       }
     } else {
-      storage.push({id, title, quantity, activeSize, price});
+      storage.push({nano: nanoid(), id, title, quantity, activeSize, price});
     }
     localStorage.setItem('items', JSON.stringify(storage));
     navigate("/cart")
