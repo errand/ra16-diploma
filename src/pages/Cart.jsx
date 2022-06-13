@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 import {countItems} from "../thunks/cartThunk";
 import getStorageItems from "../tools/localStorage"
@@ -9,7 +9,8 @@ export default function Cart() {
   const dispatch = useDispatch();
   const miniLocalStorage = getStorageItems();
   const [totalPrice, setTotalPrice] = useState(0);
-  const [storage, setStorage] = useState(miniLocalStorage)
+  const [storage, setStorage] = useState(miniLocalStorage);
+  const [contacts, setContacts] = useState({"phone": "", "address": ""});
 
   useEffect(()=>{
     setTotalPrice(new Intl.NumberFormat('ru-RU').format(storage.reduce((prev, next) => prev + +next.price * +next.quantity, 0)));
@@ -22,8 +23,54 @@ export default function Cart() {
     setStorage(newStorage)
   }
 
-  const handleOrder = () => {
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setContacts(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
+  const handleOrder = e => {
+    e.preventDefault();
+    const orderObject = {
+      owner: contacts,
+      items: storage
+    }
+    if(validateForm(e.target) === 0) {
+      console.log('good to go')
+    }
+
+  }
+
+  const validateForm = form => {
+    let errorsCount;
+    if(form.querySelector('.tooltip2')) {
+      form.querySelector('.tooltip2').remove();
+      errorsCount = 0;
+    }
+    const phoneInput = form.querySelector('#phone');
+    const addressInput = form.querySelector('#address');
+    const tooltip = document.createElement('div');
+    tooltip.classList.add('tooltip2');
+    tooltip.classList.add('alert');
+    tooltip.classList.add('alert-danger');
+    if(contacts.phone.trim() === '') {
+      tooltip.innerText = "Телефон не может быть пустым";
+      phoneInput.after(tooltip);
+      errorsCount += 1;
+    }
+    if(!(/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/.test(contacts.phone))) {
+      tooltip.innerText = "Телефон должен состоять из цифр";
+      phoneInput.after(tooltip);
+      errorsCount += 1;
+    }
+    if(contacts.address.trim() === '') {
+      tooltip.innerText = "Адрес не может быть пустым";
+      addressInput.after(tooltip);
+      errorsCount += 1;
+    }
+    return errorsCount;
   }
 
   return (
@@ -69,17 +116,17 @@ export default function Cart() {
         <section className="order">
         <h2 className="text-center">Оформить заказ</h2>
         <div className="card" style={{maxWidth: 30 + 'rem', margin: 0 + 'auto'}}>
-        <form className="card-body">
+        <form className="card-body" onSubmit={handleOrder}>
         <div className="form-group">
         <label htmlFor="phone">Телефон</label>
-        <input className="form-control" id="phone" placeholder="Ваш телефон" />
+        <input className="form-control" name="phone" id="phone" placeholder="Ваш телефон" value={contacts.phone} onChange={handleChange} />
         </div>
         <div className="form-group">
         <label htmlFor="address">Адрес доставки</label>
-        <input className="form-control" id="address" placeholder="Адрес доставки" />
+        <input className="form-control" name="address" id="address" placeholder="Адрес доставки" value={contacts.address} onChange={handleChange} />
         </div>
         <div className="form-group form-check">
-        <input type="checkbox" className="form-check-input" id="agreement" />
+        <input type="checkbox" className="form-check-input" id="agreement" required />
         <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
         </div>
         <button type="submit" className="btn btn-outline-secondary">Оформить</button>
