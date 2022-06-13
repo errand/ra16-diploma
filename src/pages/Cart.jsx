@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 import {countItems} from "../thunks/cartThunk";
 import getStorageItems from "../tools/localStorage"
+import {productsError, setOffset} from "../redux/productsSlice";
 
 export default function Cart() {
 
@@ -38,16 +39,33 @@ export default function Cart() {
       items: storage
     }
     if(validateForm(e.target) === 0) {
-      console.log('good to go')
+      console.log('go')
+      fetch(process.env.REACT_APP_URL + '/api/order',
+        {
+            method: "POST",
+            body: JSON.stringify(orderObject)
+          }
+        )
+        .then(request => {
+          if (request.status === 200) {
+            return request.json();
+          } else {
+            console.log(request)
+            return;
+          }
+        })
+        .then(json => {
+          console.log(json)
+        })
+        .catch((err) => console.log(err));
     }
-
   }
 
   const validateForm = form => {
-    let errorsCount;
+    let errorsCount = 0;
     if(form.querySelector('.tooltip2')) {
       form.querySelector('.tooltip2').remove();
-      errorsCount = 0;
+
     }
     const phoneInput = form.querySelector('#phone');
     const addressInput = form.querySelector('#address');
@@ -70,6 +88,8 @@ export default function Cart() {
       addressInput.after(tooltip);
       errorsCount += 1;
     }
+
+    console.log(errorsCount)
     return errorsCount;
   }
 
