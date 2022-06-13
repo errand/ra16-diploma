@@ -3,7 +3,6 @@ import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 import {countItems} from "../thunks/cartThunk";
 import getStorageItems from "../tools/localStorage"
-import {productsError, setOffset} from "../redux/productsSlice";
 
 export default function Cart() {
 
