@@ -8,14 +8,12 @@ export default function Cart() {
 
   const dispatch = useDispatch();
   const miniLocalStorage = getStorageItems();
-  const [total, setTotal] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [storage, setStorage] = useState(miniLocalStorage)
-  const [cartTotal, setCartTotal] = useState(null)
 
   useEffect(()=>{
-    setTotal(new Intl.NumberFormat('ru-RU').format(storage.reduce((prev, next) => prev + +next.price * +next.quantity, 0)));
-    setCartTotal(storage.reduce((prev, next) => prev + +next.quantity, 0));
-    dispatch(countItems(cartTotal));
+    setTotalPrice(new Intl.NumberFormat('ru-RU').format(storage.reduce((prev, next) => prev + +next.price * +next.quantity, 0)));
+    dispatch(countItems(storage.reduce((prev, next) => prev + +next.quantity, 0)));
   }, [storage]);
 
   const hanldeDelete = (nanoId) => {
@@ -30,6 +28,7 @@ export default function Cart() {
 
   return (
     <>
+      {storage && storage.length > 0 ? '' : <h1>Корзина  пуста</h1>}
       {storage && storage.length > 0 &&
       <section className="cart">
         <h2 className="text-center">Корзина</h2>
@@ -61,7 +60,7 @@ export default function Cart() {
           )}
           <tr>
             <td colSpan="5" className="text-right">Общая стоимость</td>
-            <td>{total} руб.</td>
+            <td>{totalPrice} руб.</td>
           </tr>
           </tbody>
         </table>

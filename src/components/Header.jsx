@@ -16,7 +16,6 @@ export default function Header() {
 
   useEffect(() => {
     active && searchInput.current.focus();
-    console.log(totalItems)
   })
 
   const handleSearchTogglerClick = () => {
@@ -53,7 +52,7 @@ export default function Header() {
                 <div className="header-controls-pics">
                   <div onClick={handleSearchTogglerClick} data-id="search-expander" className="header-controls-pic header-controls-search"></div>
                   <div className="header-controls-pic header-controls-cart">
-                    <div className="header-controls-cart-full">{totalItems}</div>
+                    {totalItems && totalItems > 0 ? <div className="header-controls-cart-full">{totalItems}</div> : ''}
                     <div className="header-controls-cart-menu"></div>
                   </div>
                 </div>
