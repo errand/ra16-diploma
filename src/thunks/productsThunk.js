@@ -22,7 +22,6 @@ export const appendProducts = (category, query, offset) => (dispatch) => {
 
 export const fetchProducts = (category, query, offset, id) => (dispatch) => {
   dispatch(productsLoading());
-
   const path = `/api/items${id ? '/' + id : ''}?${offset ? 'offset='+offset : ''}${query ? '&q='+ query : ''}${category ? '&categoryId='+category : ''}`
 
   fetch(process.env.REACT_APP_URL + path)
@@ -35,6 +34,7 @@ export const fetchProducts = (category, query, offset, id) => (dispatch) => {
       }
     })
     .then(json => {
+      console.log('json ', json)
       dispatch(productsReceived(json))
     })
     .catch((err) => dispatch(productsError(`Произошла ошибка: ${err}`)));

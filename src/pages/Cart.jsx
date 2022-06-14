@@ -15,7 +15,7 @@ export default function Cart() {
   useEffect(()=>{
     setTotalPrice(new Intl.NumberFormat('ru-RU').format(storage.reduce((prev, next) => prev + +next.price * +next.quantity, 0)));
     dispatch(countItems(storage.reduce((prev, next) => prev + +next.quantity, 0)));
-  }, [storage]);
+  }, [dispatch, storage]);
 
   const hanldeDelete = (nanoId) => {
     const newStorage = storage.filter(item => item.nano !== nanoId)
@@ -113,7 +113,7 @@ export default function Cart() {
           <tbody>
           {storage.map(item =>
             <tr key={item.nano}>
-              <td scope="row">{item.id}</td>
+              <td>{item.id}</td>
               <td><Link to={`/products/${item.id}`}>{item.title}</Link></td>
               <td>{item.activeSize}</td>
               <td>{item.quantity}</td>
