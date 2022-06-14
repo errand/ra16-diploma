@@ -12,12 +12,15 @@ export const productsSlice = createSlice({
   },
   reducers: {
     productsLoading: (state, action) => {
+      console.log('productsLoading: ', state.loading)
       if (state.loading === 'idle') {
         state.loading = 'pending'
       }
     },
     productsReceived: (state, action) => {
+      console.log('productsReceived: ', state.loading)
       if (state.loading === 'pending') {
+        console.log('action.payload: ', state.loading)
         state.loading = 'idle'
         state.data = action.payload
       }
