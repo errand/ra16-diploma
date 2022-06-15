@@ -35,17 +35,17 @@ export default function Header() {
             </a>
             <div className="collapase navbar-collapse" id="navbarMain">
               <ul className="navbar-nav mr-auto">
-                <li className={`nav-item${pathname === '/' ? ' active' : ''}`}>
-                  <NavLink to="/" className="nav-link">Главная</NavLink>
+                <li className={`nav-item${pathname === '/ra16-diploma/' ? ' active' : ''}`}>
+                  <NavLink to="/ra16-diploma/" className="nav-link">Главная</NavLink>
                 </li>
-                <li className={`nav-item${pathname === '/catalog' ? ' active' : ''}`}>
-                  <NavLink className="nav-link" to="/catalog">Каталог</NavLink>
+                <li className={`nav-item${pathname === '/ra16-diploma/catalog' ? ' active' : ''}`}>
+                  <NavLink className="nav-link" to="/ra16-diploma/catalog">Каталог</NavLink>
                 </li>
-                <li className={`nav-item${pathname === '/about' ? ' active' : ''}`}>
-                  <NavLink className="nav-link" to="/about">О магазине</NavLink>
+                <li className={`nav-item${pathname === '/ra16-diploma/about' ? ' active' : ''}`}>
+                  <NavLink className="nav-link" to="/ra16-diploma/about">О магазине</NavLink>
                 </li>
-                <li className={`nav-item${pathname === '/contacts' ? ' active' : ''}`}>
-                  <NavLink className="nav-link" to="/contacts">Контакты</NavLink>
+                <li className={`nav-item${pathname === '/ra16-diploma/contacts' ? ' active' : ''}`}>
+                  <NavLink className="nav-link" to="/ra16-diploma/contacts">Контакты</NavLink>
                 </li>
               </ul>
               <div>

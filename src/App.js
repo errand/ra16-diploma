@@ -21,12 +21,12 @@ function App() {
           <div className="col">
             <Banner />
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="about" element={<About />} />
-              <Route path="catalog" element={<Catalog />} />
-              <Route path="contacts" element={<Contacts />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="products/:id" element={<Product />} />
+              <Route path="/ra16-diploma/" element={<Home />} />
+              <Route path="/ra16-diploma/about" element={<About />} />
+              <Route path="/ra16-diploma/catalog" element={<Catalog />} />
+              <Route path="/ra16-diploma/contacts" element={<Contacts />} />
+              <Route path="/ra16-diploma/cart" element={<Cart />} />
+              <Route path="/ra16-diploma/products/:id" element={<Product />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
