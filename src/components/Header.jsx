@@ -20,7 +20,7 @@ export default function Header() {
 
   const handleSearchTogglerClick = () => {
     setActive(active => !active);
-    active && navigate('/catalog')
+    active && navigate('/ra16-diploma/catalog')
     dispatch(setStateQuery(query));
     setQuery('')
   }
@@ -31,7 +31,7 @@ export default function Header() {
         <div className="col">
           <nav className="navbar navbar-expand-sm navbar-light bg-light">
             <a className="navbar-brand" href="/">
-              <img src="/img/header-logo.png" alt="Bosa Noga" />
+              <img src="/ra16-diploma/img/header-logo.png" alt="Bosa Noga" />
             </a>
             <div className="collapase navbar-collapse" id="navbarMain">
               <ul className="navbar-nav mr-auto">
