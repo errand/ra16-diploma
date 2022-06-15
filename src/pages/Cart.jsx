@@ -77,6 +77,7 @@ export default function Cart() {
       phoneInput.after(tooltip);
       errorsCount += 1;
     }
+    //eslint-disable-next-line
     if(!(/^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/.test(contacts.phone))) {
       tooltip.innerText = "Телефон должен состоять из цифр";
       phoneInput.after(tooltip);

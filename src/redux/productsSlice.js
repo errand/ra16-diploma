@@ -12,30 +12,19 @@ export const productsSlice = createSlice({
   },
   reducers: {
     productsLoading: (state, action) => {
-      console.log('productsLoading: ', state.loading)
-      if (state.loading === 'idle') {
         state.loading = 'pending'
-      }
     },
     productsReceived: (state, action) => {
-      console.log('productsReceived: ', state.loading)
-      if (state.loading === 'pending') {
-        console.log('action.payload: ', state.loading)
         state.loading = 'idle'
         state.data = action.payload
-      }
     },
     topSalesReceived: (state, action) => {
-      if (state.loading === 'pending') {
         state.loading = 'idle'
         state.topSales = action.payload
-      }
     },
     productsAppend: (state, action) => {
-      if (state.loading === 'pending') {
         state.loading = 'idle'
         state.data = [...state.data, ...action.payload]
-      }
     },
     setSearchQuery: (state, action) => {
         state.searchQuery = action.payload
@@ -44,10 +33,8 @@ export const productsSlice = createSlice({
         state.next = action.payload
     },
     productsError: (state, action) => {
-      if (state.loading === 'pending') {
         state.loading = 'idle'
         state.error = action.payload
-      }
     },
   }
 });
