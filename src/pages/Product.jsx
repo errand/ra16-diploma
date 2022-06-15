@@ -52,7 +52,7 @@ export default function Product() {
       storage.push({nano: nanoid(), id, title, quantity, activeSize, price});
     }
     localStorage.setItem('items', JSON.stringify(storage));
-    navigate("/cart")
+    navigate("/ra16-diploma/cart")
   }
 
 
