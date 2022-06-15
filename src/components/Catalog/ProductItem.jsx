@@ -10,7 +10,7 @@ export default function ProductItem({product}) {
         <div className="card-body">
           <p className="card-text">{product.title}</p>
           <p className="card-text">{product.price} руб.</p>
-          <Link to={`/products/${product.id}`} className="btn btn-outline-primary">Заказать</Link>
+          <Link to={`/ra16-diploma/products/${product.id}`} className="btn btn-outline-primary">Заказать</Link>
         </div>
       </div>
     </div>
