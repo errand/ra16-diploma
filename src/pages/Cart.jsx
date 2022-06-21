@@ -38,12 +38,16 @@ export default function Cart() {
       items: storage
     }
     if(validateForm(e.target) === 0) {
-      console.log('go')
+      console.log(orderObject)
       fetch(process.env.REACT_APP_URL + '/api/order',
         {
-            method: "POST",
-            body: JSON.stringify(orderObject)
-          }
+          method: "POST",
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: orderObject
+        }
         )
         .then(request => {
           if (request.status === 200) {
