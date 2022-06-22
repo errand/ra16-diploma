@@ -38,7 +38,6 @@ export default function Cart() {
       items: storage
     }
     if(validateForm(e.target) === 0) {
-      console.log(orderObject)
       fetch(process.env.REACT_APP_URL + '/api/order',
         {
           method: "POST",
@@ -46,9 +45,9 @@ export default function Cart() {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: orderObject
+          body: JSON.stringify(orderObject)
         }
-        )
+      )
         .then(request => {
           if (request.status === 200) {
             return request.json();
@@ -137,26 +136,26 @@ export default function Cart() {
         </table>
       </section>}
       {storage && storage.length > 0 &&
-        <section className="order">
+      <section className="order">
         <h2 className="text-center">Оформить заказ</h2>
         <div className="card" style={{maxWidth: 30 + 'rem', margin: 0 + 'auto'}}>
-        <form className="card-body" onSubmit={handleOrder}>
-        <div className="form-group">
-        <label htmlFor="phone">Телефон</label>
-        <input className="form-control" name="phone" id="phone" placeholder="Ваш телефон" value={contacts.phone} onChange={handleChange} />
+          <form className="card-body" onSubmit={handleOrder}>
+            <div className="form-group">
+              <label htmlFor="phone">Телефон</label>
+              <input className="form-control" name="phone" id="phone" placeholder="Ваш телефон" value={contacts.phone} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="address">Адрес доставки</label>
+              <input className="form-control" name="address" id="address" placeholder="Адрес доставки" value={contacts.address} onChange={handleChange} />
+            </div>
+            <div className="form-group form-check">
+              <input type="checkbox" className="form-check-input" id="agreement" required />
+              <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
+            </div>
+            <button type="submit" className="btn btn-outline-secondary">Оформить</button>
+          </form>
         </div>
-        <div className="form-group">
-        <label htmlFor="address">Адрес доставки</label>
-        <input className="form-control" name="address" id="address" placeholder="Адрес доставки" value={contacts.address} onChange={handleChange} />
-        </div>
-        <div className="form-group form-check">
-        <input type="checkbox" className="form-check-input" id="agreement" required />
-        <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
-        </div>
-        <button type="submit" className="btn btn-outline-secondary">Оформить</button>
-        </form>
-        </div>
-        </section>
+      </section>
       }
     </>
   )
