@@ -38,6 +38,8 @@ export default function Cart() {
       items: storage
     }
     if(validateForm(e.target) === 0) {
+      console.log('JSON.stringify', JSON.stringify(orderObject))
+      console.log('Obj', orderObject)
       fetch(process.env.REACT_APP_URL + '/api/order',
         {
           method: "POST",
