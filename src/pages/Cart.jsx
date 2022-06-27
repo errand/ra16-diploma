@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 import {countItems} from "../thunks/cartThunk";
 import getStorageItems from "../tools/localStorage"
+import Preloader from "../components/Preloader";
 
 export default function Cart() {
 
@@ -11,6 +12,8 @@ export default function Cart() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [storage, setStorage] = useState(miniLocalStorage);
   const [contacts, setContacts] = useState({"phone": "", "address": ""});
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(()=>{
     setTotalPrice(new Intl.NumberFormat('ru-RU').format(storage.reduce((prev, next) => prev + +next.price * +next.quantity, 0)));
@@ -33,17 +36,19 @@ export default function Cart() {
 
   const handleOrder = e => {
     e.preventDefault();
+    setLoading(true)
     const orderObject = {
       owner: contacts,
-      items: storage
+      items: storage.map(item => ({
+        id: +item.id,
+        price: item.price,
+        count: item.quantity
+      }))
     }
     if(validateForm(e.target) === 0) {
-      console.log('JSON.stringify', JSON.stringify(orderObject))
-      console.log('Obj', orderObject)
       fetch(process.env.REACT_APP_URL + '/api/order',
         {
           method: "POST",
-          mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -51,15 +56,14 @@ export default function Cart() {
         }
       )
         .then(request => {
-          if (request.status === 200) {
-            return request.json();
+          if (request.ok) {
+            setMessage('Ваш заказ успешно отправлен!')
+            setLoading(false)
+            localStorage.removeItem('items');
+            setStorage([])
           } else {
-            console.log(request)
             return;
           }
-        })
-        .then(json => {
-          console.log(json)
         })
         .catch((err) => console.log(err));
     }
@@ -93,14 +97,14 @@ export default function Cart() {
       addressInput.after(tooltip);
       errorsCount += 1;
     }
-
-    console.log(errorsCount)
     return errorsCount;
   }
 
   return (
     <>
       {storage && storage.length > 0 ? '' : <h1>Корзина  пуста</h1>}
+      {message && <div className="alert alert-success">{message}</div>}
+      {loading ? <Preloader/> : '' }
       {storage && storage.length > 0 &&
       <section className="cart">
         <h2 className="text-center">Корзина</h2>

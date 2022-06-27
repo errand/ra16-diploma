@@ -31,11 +31,13 @@ export default function CategoriesFilter() {
       {loading === 'pending' ? <Preloader/> :
         <ul className="catalog-categories nav justify-content-center">
           <li className="nav-item">
-            <button type="button" className={active === 0 ? "nav-link active" : "nav-link" }  onClick={() => handleCategoryClick(0)}>Все</button>
+            {/* eslint-disable-next-line*/}
+            <a type="button" className={active === 0 ? "nav-link active" : "nav-link" }  onClick={() => handleCategoryClick(0)}>Все</a>
           </li>
           {categories && categories.map(cat =>
             <li className="nav-item" key={cat.id}>
-              <button type="button" className={active === cat.id ? "nav-link active" : "nav-link" } onClick={() => handleCategoryClick(cat.id)}>{cat.title}</button>
+              {/* eslint-disable-next-line*/}
+              <a type="button" className={active === cat.id ? "nav-link active" : "nav-link" } onClick={() => handleCategoryClick(cat.id)}>{cat.title}</a>
             </li>)}
         </ul>}
     </>
